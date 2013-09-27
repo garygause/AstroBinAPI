@@ -16,53 +16,67 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import android.util.Log;
 
-
-public class RestApiBase {
+public abstract class RestApiBase {
 
     protected static final String TAG = "RestApi";
     protected static final boolean JSON_FAIL_ON_UNKNOWN = false;
-    
+
     protected String mApiToken;
     protected String mApiKey;
     protected String mApiSecret;
     protected ObjectMapper mMapper;
-    
+
     public interface RestResult {
         public static final int FAIL = 0;
         public static final int SUCCESS = 1;
         public static final int ERROR = 2;
         public static final int NO_INTERNET = 3;
     }
-    
+
+    /**
+     * basic constructor, no credentials
+     */
+    public RestApiBase() {
+        mMapper = new ObjectMapper();
+        mMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, JSON_FAIL_ON_UNKNOWN);
+    }
+
+    /**
+     * token based authentication constructor
+     * 
+     * @param apiToken
+     */
     public RestApiBase(String apiToken) {
         mApiToken = apiToken;
         mMapper = new ObjectMapper();
-        mMapper.configure(
-                DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,
-                JSON_FAIL_ON_UNKNOWN);
+        mMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, JSON_FAIL_ON_UNKNOWN);
     }
-    
+
+    /**
+     * key/secret based authentication constructor
+     * 
+     * @param apiKey
+     * @param apiSecret
+     */
     public RestApiBase(String apiKey, String apiSecret) {
         mApiKey = apiKey;
         mApiSecret = apiSecret;
         mMapper = new ObjectMapper();
-        mMapper.configure(
-                DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,
-                JSON_FAIL_ON_UNKNOWN);
+        mMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, JSON_FAIL_ON_UNKNOWN);
     }
-    
+
     /********************************
      * 
      *******************************/
 
     /**
-     * buildParms
+     * buildGetParms
      * 
      * @param url
      * @param args
-     * @return
+     * @return url with param string
      */
-    public static String buildParams(String url, Map<String, String> args) {
+    public static String buildGetParams(String url, Map<String, String> args) {
         List<String> argList = new ArrayList<String>();
         for (String key : args.keySet()) {
             String arg = key + "=" + encode(args.get(key));
@@ -81,13 +95,12 @@ public class RestApiBase {
     }
 
     /**
-     * buildParmStr
+     * buildPostParams
      * 
-     * @param url
      * @param args
-     * @return
+     * @return param string
      */
-    public static String buildParamStr(Map<String, String> args) {
+    public static String buildPostParams(Map<String, String> args) {
         List<String> argList = new ArrayList<String>();
         for (String key : args.keySet()) {
             String arg = key + "=" + encode(args.get(key));
@@ -116,28 +129,27 @@ public class RestApiBase {
             return "";
         try {
             return URLEncoder.encode(value, "utf-8");
-        } catch (UnsupportedEncodingException wow) {
-            throw new RuntimeException(wow.getMessage(), wow);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     /**
-     * doHttpMethodReq
+     * sendHttpRequest
      * 
-     * @param urlStr
-     * @param requestMethod
-     * @param paramStr
-     * @param header
-     * @return
+     * @param String urlStr
+     * @param String requestMethod
+     * @param Map<String, String> params
+     * @param Map<String, String> header
+     * @return HttpURLConnection
      */
-    public HttpURLConnection doHttpMethodReq(String urlStr,
-            String requestMethod, Map<String, String> params,
+    public HttpURLConnection sendHttpRequest(String urlStr, String requestMethod, Map<String, String> params,
             Map<String, String> header) {
 
         try {
-            Log.i(TAG, "RestApi url: " + urlStr);          
+            Log.i(TAG, "RestApi url: " + urlStr);
             if (params != null && !requestMethod.equals("POST"))
-                urlStr = buildParams(urlStr, params);
+                urlStr = buildGetParams(urlStr, params);
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             if (requestMethod.equals("POST"))
@@ -154,23 +166,19 @@ public class RestApiBase {
             // this ensures the auth header is present with the post
             // otherwise, the post data will be lost. preemptive auth.
             final String username = mApiKey;
-            final String password = mApiSecret;     
+            final String password = mApiSecret;
             if (username != null && password != null) {
                 String authStr = username + ":" + password;
                 String encoding = Base64.encodeBytes(authStr.getBytes());
-                conn.setRequestProperty  ("Authorization", "Basic " + encoding);
+                conn.setRequestProperty("Authorization", "Basic " + encoding);
             } else if (mApiToken != null) {
-                //String encoding = Base64.encodeBytes(mApiToken.getBytes());
-                conn.setRequestProperty  ("Authorization", "Token " + mApiToken);
+                // String encoding = Base64.encodeBytes(mApiToken.getBytes());
+                conn.setRequestProperty("Authorization", "Token " + mApiToken);
             }
-            // conn.setRequestProperty("X-HTTP-Method-Override", "PUT"); 
-            // if POST, should use this
-            // conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             OutputStreamWriter wr = null;
-            if (requestMethod != null && !requestMethod.equals("GET")
-                    && !requestMethod.equals("DELETE")) {
-                String paramStr = buildParamStr(params);
+            if (requestMethod != null && !requestMethod.equals("GET") && !requestMethod.equals("DELETE")) {
+                String paramStr = buildPostParams(params);
                 wr = new OutputStreamWriter(conn.getOutputStream());
                 wr.write(paramStr);
                 wr.flush();
@@ -186,23 +194,4 @@ public class RestApiBase {
         return null;
     }
 
-    /**
-     * Detect if an Internet connection is available.
-     * 
-     * @return true if an Internet connection is available
-     */
-    /*
-    public static boolean internetIsAvailable() {
-        boolean bAvailable = false;
-        ConnectivityManager cm = (ConnectivityManager) ApplicationContext.getContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if ((netInfo != null) && netInfo.isConnected()) {
-            // connection is available
-            bAvailable = true;
-        }
-        return bAvailable;
-    }
-    */
-    
 }
