@@ -10,6 +10,7 @@ public class Image {
      * 
      * animated
      * dec_center_dms
+     * ra_center_hms
      * description
      * fieldh
      * fieldw
@@ -27,7 +28,6 @@ public class Image {
      * link_to_fits
      * orientation
      * original_ext
-     * ra_center_hms
      * rating_score
      * rating_votes
      * resource_uri
@@ -37,16 +37,39 @@ public class Image {
      * updated
      * uploaded
      * user
-     * w
      */
     
+    public static final String ID = "id";
+    public static final String HEIGHT = "h";
+    public static final String WIDTH = "w";
+    public static final String FIELDH = "fieldh";
+    public static final String FIELDW = "fieldw";
+    public static final String FIELDUNITS = "fieldunits";
+    public static final String ANIMATED = "animated";
+    public static final String DEC_CENTER_DMS = "dec_center_dms";
+    public static final String RA_CENTER_DMS = "ra_center_dms";
+    public static final String DESCRIPTION = "description";
+    public static final String IS_SOLVED = "is_solved";
+    public static final String IS_FINAL = "is_final";
+    public static final String FILENAME = "filename";
+    public static final String LICENSE = "license";
+    public static final String LINK = "link";
+    public static final String LINK_TO_FITS = "link_to_fits";
+    public static final String ORIENTATION = "orientation";
+    public static final String ORIGINAL_EXT = "original_ext";
     public static final String USER = "user";
     public static final String RATING_SCORE = "rating_score";
+    public static final String RATING_VOTES = "rating_votes";
+    public static final String RESOURCE_URI = "resource_uri";
+    public static final String REVISIONS = "revisions";
     public static final String SUBJECTS = "subjects";
-    public static final String SUBJECT = "subject";
     public static final String TITLE = "title";
-    public static final String DESCRIPTION = "description";
-    
+    public static final String UPLOADED = "uploaded";
+    public static final String UPDATED = "updated";
+    public static final String IMAGING_CAMERAS = "imaging_cameras";
+    public static final String IMAGING_TELESCOPES = "imaging_telescopes";
+    public static final String SUBJECT = "subject";
+
     private int mId;
     private boolean mAnimated;
     private String mDecCenterDms;
