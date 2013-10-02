@@ -70,37 +70,64 @@ public class Image {
     public static final String IMAGING_TELESCOPES = "imaging_telescopes";
     public static final String SUBJECT = "subject";
 
-    private int mId;
-    private boolean mAnimated;
-    private String mDecCenterDms;
-    private String mRaCenterDms;
-    private String mDescription;
-    private float mFieldHeight;
-    private float mFieldWidth;
-    private String mFieldUnits;
-    private String mFileName;
-    private int mHeight;
-    private int mWidth;
-    private boolean mIsFinal;
-    private boolean mIsSolved;
-    private int mLicense;
-    private String mLink;
-    private String mLinkToFits;
-    private float mOrientation;
-    private String mOriginalExtension;
-    private int mRatingScore;
-    private int mRatingVotes;
-    private String mResourceUri;
-    private String mTitle;
-    private String mUpdated;
-    private String mUploaded;
-    private String mUser;
-    private ArrayList<String> mRevisions;
-    private ArrayList<String> mSubjects;
-    private ArrayList<String> mImagingCameras;
-    private ArrayList<String> mImagingTelescopes;
+    protected int mId;
+    protected boolean mAnimated;
+    protected String mDecCenterDms;
+    protected String mRaCenterDms;
+    protected String mDescription;
+    protected float mFieldHeight;
+    protected float mFieldWidth;
+    protected String mFieldUnits;
+    protected String mFileName;
+    protected int mHeight;
+    protected int mWidth;
+    protected boolean mIsFinal;
+    protected boolean mIsSolved;
+    protected int mLicense;
+    protected String mLink;
+    protected String mLinkToFits;
+    protected float mOrientation;
+    protected String mOriginalExtension;
+    protected int mRatingScore;
+    protected int mRatingVotes;
+    protected String mResourceUri;
+    protected String mTitle;
+    protected String mUpdated;
+    protected String mUploaded;
+    protected String mUser;
+    protected ArrayList<String> mRevisions;
+    protected ArrayList<String> mSubjects;
+    protected ArrayList<String> mImagingCameras;
+    protected ArrayList<String> mImagingTelescopes;
     
     public Image() {};    
+    
+    public String getImageThumb() {
+        String url = null;
+        if (mFileName != null && mFileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_thumb.png";
+        }
+        return url;
+    }
+    
+    public String getImageResized() {
+        String url = null;
+        if (mFileName != null && mFileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_resized." + mOriginalExtension;
+        }
+        return url;
+    }
+    
+    public String getImageHd() {
+        String url = null;
+        if (mFileName != null && mFileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "." + mOriginalExtension;
+        }
+        return url;
+    }
     
     public int getId() {
         return mId;

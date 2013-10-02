@@ -27,10 +27,11 @@ public class AstroBinApi extends RestApiBase {
     private static final String CONTAINS = "__icontains";
 
     // api resources
-    private static final String API_HOST = "http://astrobin.com";
-    private static final String API_BASE = API_HOST + "/api/v1";
-    private static final String API_IMAGE = API_BASE + "/image";
-    private static final String API_DAILYIMAGE = API_BASE + "/imageoftheday";
+    public static final String CDN_HOST = "http://cdn.astrobin.com";
+    public static final String API_HOST = "http://astrobin.com";
+    public static final String API_BASE = API_HOST + "/api/v1";
+    public static final String API_IMAGE = API_BASE + "/image";
+    public static final String API_DAILYIMAGE = API_BASE + "/imageoftheday";
 
     // member variables
     private String mApiKey;
