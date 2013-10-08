@@ -129,11 +129,29 @@ public class Image {
         return url;
     }
     
+    public static String getImageThumb(String fileName) {
+        String url = null;
+        if (fileName != null && fileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + fileName + "_thumb.png";
+        }
+        return url;
+    }
+    
     public String getImageResized() {
         String url = null;
         if (mFileName != null && mFileName.length() > 0) {
             // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_resized." + mOriginalExtension;
+            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_resized" + mOriginalExtension;
+        }
+        return url;
+    }
+    
+    public static String getImageResized(String fileName, String extension) {
+        String url = null;
+        if (fileName != null && fileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + fileName + "_resized" + extension;
         }
         return url;
     }
@@ -142,10 +160,19 @@ public class Image {
         String url = null;
         if (mFileName != null && mFileName.length() > 0) {
             // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "." + mOriginalExtension;
+            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + mOriginalExtension;
         }
         return url;
     }
+    
+    public static String getImageHd(String fileName, String extension) {
+        String url = null;
+        if (fileName != null && fileName.length() > 0) {
+            // TODO: have server send file paths
+            url = AstroBinApi.CDN_HOST + "/images/" + fileName + extension;
+        }
+        return url;
+    }    
     
     public int getId() {
         return mId;
