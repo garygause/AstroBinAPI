@@ -30,10 +30,6 @@ public class Image {
      * dec_center_dms
      * ra_center_hms
      * description
-     * fieldh
-     * fieldw
-     * fieldunits
-     * filename
      * h
      * w
      * id
@@ -45,7 +41,6 @@ public class Image {
      * link
      * link_to_fits
      * orientation
-     * original_ext
      * rating_score
      * rating_votes
      * resource_uri
@@ -55,26 +50,26 @@ public class Image {
      * updated
      * uploaded
      * user
+     * url_thumb
+     * url_gallery
+     * url_regular
+     * url_hd
+     * url_real
      */
     
     public static final String ID = "id";
     public static final String HEIGHT = "h";
     public static final String WIDTH = "w";
-    public static final String FIELDH = "fieldh";
-    public static final String FIELDW = "fieldw";
-    public static final String FIELDUNITS = "fieldunits";
     public static final String ANIMATED = "animated";
     public static final String DEC_CENTER_DMS = "dec_center_dms";
     public static final String RA_CENTER_DMS = "ra_center_dms";
     public static final String DESCRIPTION = "description";
     public static final String IS_SOLVED = "is_solved";
     public static final String IS_FINAL = "is_final";
-    public static final String FILENAME = "filename";
     public static final String LICENSE = "license";
     public static final String LINK = "link";
     public static final String LINK_TO_FITS = "link_to_fits";
     public static final String ORIENTATION = "orientation";
-    public static final String ORIGINAL_EXT = "original_ext";
     public static final String USER = "user";
     public static final String RATING_SCORE = "rating_score";
     public static final String RATING_VOTES = "rating_votes";
@@ -87,16 +82,18 @@ public class Image {
     public static final String IMAGING_CAMERAS = "imaging_cameras";
     public static final String IMAGING_TELESCOPES = "imaging_telescopes";
     public static final String SUBJECT = "subject";
+    public static final String URL_THUMB = "url_thumb";
+    public static final String URL_GALLERY = "url_gallery";
+    public static final String URL_REGULAR = "url_regular";
+    public static final String URL_HD = "url_hd";
+    public static final String URL_REAL = "url_real";
+
 
     protected int mId;
     protected boolean mAnimated;
     protected String mDecCenterDms;
     protected String mRaCenterDms;
     protected String mDescription;
-    protected float mFieldHeight;
-    protected float mFieldWidth;
-    protected String mFieldUnits;
-    protected String mFileName;
     protected int mHeight;
     protected int mWidth;
     protected boolean mIsFinal;
@@ -105,7 +102,6 @@ public class Image {
     protected String mLink;
     protected String mLinkToFits;
     protected float mOrientation;
-    protected String mOriginalExtension;
     protected int mRatingScore;
     protected int mRatingVotes;
     protected String mResourceUri;
@@ -113,66 +109,17 @@ public class Image {
     protected String mUpdated;
     protected String mUploaded;
     protected String mUser;
+    protected String mUrlThumb;
+    protected String mUrlGallery;
+    protected String mUrlRegular;
+    protected String mUrlHd;
+    protected String mUrlReal;
     protected ArrayList<String> mRevisions;
     protected ArrayList<String> mSubjects;
     protected ArrayList<String> mImagingCameras;
     protected ArrayList<String> mImagingTelescopes;
     
     public Image() {};    
-    
-    public String getImageThumb() {
-        String url = null;
-        if (mFileName != null && mFileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_thumb.png";
-        }
-        return url;
-    }
-    
-    public static String getImageThumb(String fileName) {
-        String url = null;
-        if (fileName != null && fileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + fileName + "_thumb.png";
-        }
-        return url;
-    }
-    
-    public String getImageResized() {
-        String url = null;
-        if (mFileName != null && mFileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + "_resized" + mOriginalExtension;
-        }
-        return url;
-    }
-    
-    public static String getImageResized(String fileName, String extension) {
-        String url = null;
-        if (fileName != null && fileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + fileName + "_resized" + extension;
-        }
-        return url;
-    }
-    
-    public String getImageHd() {
-        String url = null;
-        if (mFileName != null && mFileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + mFileName + mOriginalExtension;
-        }
-        return url;
-    }
-    
-    public static String getImageHd(String fileName, String extension) {
-        String url = null;
-        if (fileName != null && fileName.length() > 0) {
-            // TODO: have server send file paths
-            url = AstroBinApi.CDN_HOST + "/images/" + fileName + extension;
-        }
-        return url;
-    }    
     
     public int getId() {
         return mId;
@@ -215,38 +162,6 @@ public class Image {
     
     public void setDescription(String desc) {
         mDescription = desc;
-    }
-
-    public float getFieldh() {
-        return mFieldHeight;
-    }
-    
-    public void setFieldh(float fieldHeight) {
-        mFieldHeight = fieldHeight;
-    }
-    
-    public float getFieldw() {
-        return mFieldWidth;
-    }
-    
-    public void setFieldw(float fieldWidth) {
-        mFieldWidth = fieldWidth;
-    }
-    
-    public String getFieldunits() {
-        return mFieldUnits;
-    }
-    
-    public void setFieldunits(String units) {
-        mFieldUnits = units;
-    }
-
-    public String getFilename() {
-        return mFileName;
-    }
-    
-    public void setFilename(String fileName) {
-        mFileName = fileName;
     }
 
     public int getH() {
@@ -311,15 +226,7 @@ public class Image {
 
     public void setOrientation(float value) {
         mOrientation = value;
-    }
-    
-    public String getOriginal_ext() {
-        return mOriginalExtension;
-    }
-
-    public void setOriginal_ext(String extension) {
-        mOriginalExtension = extension;
-    }
+    }    
 
     public int getRating_score() {
         return mRatingScore;
@@ -376,6 +283,46 @@ public class Image {
     public void setTitle(String title) {
         mTitle = title;
     }
+    
+    public String getUrl_thumb() {
+        return mUrlThumb;
+    }
+    
+    public void setUrl_thumb(String url) {
+        mUrlThumb = url;
+    }
+    
+    public String getUrl_gallery() {
+        return mUrlGallery;
+    }
+    
+    public void setUrl_gallery(String url) {
+        mUrlGallery = url;
+    }
+    
+    public String getUrl_regular() {
+        return mUrlRegular;
+    }
+    
+    public void setUrl_regular(String url) {
+        mUrlRegular = url;
+    }
+    
+    public String getUrl_hd() {
+        return mUrlHd;
+    }
+    
+    public void setUrl_hd(String url) {
+        mUrlHd = url;
+    }
+    
+    public String getUrl_real() {
+        return mUrlReal;
+    }
+    
+    public void setUrl_real(String url) {
+        mUrlReal = url;
+    }    
     
     public ArrayList<String> getImaging_cameras() {
         return mImagingCameras;
