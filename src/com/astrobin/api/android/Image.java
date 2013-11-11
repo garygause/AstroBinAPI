@@ -22,8 +22,6 @@ import java.util.ArrayList;
 
 public class Image {
 
-    // {"animated": false, "dec_center_dms": "+41:15:58.936", "description": "It was a clear sky so I thought...", "fieldh": "2.8220000000", "fieldunits": "degrees", "fieldw": "4.2370000000", "filename": "df1c3c7a-da1a-484c-9798-8eef318a911d", "h": 1896, "id": "57782", "imaging_cameras": ["Canon EOS 1100D / Rebel T3"], "imaging_telescopes": [" EF 75-300mm f/4-5.6"], "is_final": true, "is_solved": true, "license": 1, "link": "", "link_to_fits": "", "orientation": "94.4357310000", "original_ext": ".jpg", "ra_center_hms": "00:42:51.913", "rating_score": 4, "rating_votes": 2, "resource_uri": "/api/v1/image/57782/", "revisions": [], "subjects": ["M110", "M32", "M31"], "title": "Andromeda", "updated": "2013-09-26T15:40:18.828211", "uploaded": "2013-09-26T12:33:58.103845", "user": "micko", "w": 2848}
-
     /* Json fields:
      * 
      * animated

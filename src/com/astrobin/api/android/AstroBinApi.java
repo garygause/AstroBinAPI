@@ -12,10 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * @author Gary Gause
- * 
+ *  
  */
+
 package com.astrobin.api.android;
 
 import java.io.IOException;
@@ -30,6 +29,12 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
 
 import android.util.Log;
+
+/**
+ * Api class for accessing the AstroBin ReST webservice.
+ *
+ * @author Gary Gause
+ */
 
 public class AstroBinApi extends RestApiBase {
 
@@ -85,7 +90,8 @@ public class AstroBinApi extends RestApiBase {
     /**
      * Get image by uri.
      * 
-     * @param String uri
+     * @param String
+     *            uri
      * @return Image
      */
     public Image getImage(String uri) {
@@ -149,10 +155,14 @@ public class AstroBinApi extends RestApiBase {
     /**
      * Get image of the day.
      * 
-     * @param Map<String, String> where
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param Map
+     *            <String, String> where
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
@@ -165,9 +175,12 @@ public class AstroBinApi extends RestApiBase {
                 params.put(key, where.get(key));
             }
         }
-        if (limit != null) params.put(LIMIT, String.valueOf(limit));
-        if (offset != null) params.put(OFFSET, String.valueOf(offset));
-        if (orderby != null) params.put(ORDERBY, orderby);
+        if (limit != null)
+            params.put(LIMIT, String.valueOf(limit));
+        if (offset != null)
+            params.put(OFFSET, String.valueOf(offset));
+        if (orderby != null)
+            params.put(ORDERBY, orderby);
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Accept", "application/json;version=1");
@@ -191,20 +204,23 @@ public class AstroBinApi extends RestApiBase {
         }
         return images;
     }
-    
+
     public Image getImageOfTheDay() {
         ArrayList<Image> images = getImageOfTheDay(null, 1, null, null);
         return images.get(0);
     }
-    
-    
+
     /**
      * Get images.
      * 
-     * @param Map<String, String> where
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param Map
+     *            <String, String> where
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
@@ -217,9 +233,12 @@ public class AstroBinApi extends RestApiBase {
                 params.put(key, where.get(key));
             }
         }
-        if (limit != null) params.put(LIMIT, String.valueOf(limit));
-        if (offset != null) params.put(OFFSET, String.valueOf(offset));
-        if (orderby != null) params.put(ORDERBY, orderby);
+        if (limit != null)
+            params.put(LIMIT, String.valueOf(limit));
+        if (offset != null)
+            params.put(OFFSET, String.valueOf(offset));
+        if (orderby != null)
+            params.put(ORDERBY, orderby);
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Accept", "application/json;version=1");
@@ -247,78 +266,100 @@ public class AstroBinApi extends RestApiBase {
     /**
      * Get images by subject.
      * 
-     * @param String subject
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param String
+     *            subject
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
     public ArrayList<Image> getImagesBySubject(String subject, Integer limit, Integer offset, String orderby) {
         Map<String, String> where = new HashMap<String, String>();
-        where.put(Image.SUBJECT, subject);
+        if (subject != null)
+            where.put(Image.SUBJECT, subject);
         return getImages(where, limit, offset, orderby);
     }
 
     /**
      * Get images by user.
      * 
-     * @param String user
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param String
+     *            user
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
     public ArrayList<Image> getImagesByUser(String user, Integer limit, Integer offset, String orderby) {
         Map<String, String> where = new HashMap<String, String>();
-        where.put(Image.USER, user);
+        if (user != null)
+            where.put(Image.USER, user);
         return getImages(where, limit, offset, orderby);
     }
-    
+
     /**
      * Get images by partial title.
      * 
-     * @param String title
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param String
+     *            title
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
     public ArrayList<Image> getImagesByTitle(String title, Integer limit, Integer offset, String orderby) {
         Map<String, String> where = new HashMap<String, String>();
-        where.put(Image.TITLE + CONTAINS, title);
+        if (title != null)
+            where.put(Image.TITLE + CONTAINS, title);
         return getImages(where, limit, offset, orderby);
     }
-    
+
     /**
      * Get images by partial description.
      * 
-     * @param String keyword
-     * @param Integer limit
-     * @param Integer offset
-     * @param String orderby
+     * @param String
+     *            keyword
+     * @param Integer
+     *            limit
+     * @param Integer
+     *            offset
+     * @param String
+     *            orderby
      * 
      * @return ArrayList<Image>
      */
     public ArrayList<Image> getImagesByDescription(String keyword, Integer limit, Integer offset, String orderby) {
         Map<String, String> where = new HashMap<String, String>();
-        where.put(Image.DESCRIPTION + CONTAINS, keyword);
+        if (keyword != null)
+            where.put(Image.DESCRIPTION + CONTAINS, keyword);
         return getImages(where, limit, offset, orderby);
     }
 
     /**
      * Get top images.
      * 
-     * @param Integer limit
+     * @param Integer
+     *            limit
      * 
      * @return ArrayList<Image>
      */
     public ArrayList<Image> getTopImages(Integer limit) {
         String orderby = Image.RATING_SCORE;
-        if (limit == null) limit = 5;
+        if (limit == null)
+            limit = 5;
         return getImages(null, limit, null, orderby);
     }
-    
+
 }
