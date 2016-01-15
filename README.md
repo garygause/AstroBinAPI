@@ -1,6 +1,8 @@
 AstroBinAPI
 ===========
 
+***This library is deprecated and no longer up to date with the current api.***
+
 Android library for AstroBin.com ReST API.
 
 Example usage: 
